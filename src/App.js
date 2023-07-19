@@ -1,6 +1,8 @@
 import { useState } from "react";
 import translate_text_using_chatgpt from "./components/translator";
 import order from "./components/copywriter";
+import summary_using_chatgpt from "./components/summary";
+import chat_using_chatgpt from "./components/chatbot";
 
 export default function Home() {
     // 번역 서비스
@@ -23,7 +25,7 @@ export default function Home() {
             return;
         }
         setResult(translated);
-        setText("");
+        // setText("");
         return;
     };
 
@@ -44,6 +46,38 @@ export default function Home() {
             return;
         }
         setCopy(slogan);
+        return;
+    };
+
+    // 요약 서비스
+    const [sentence, setSentence] = useState("");
+    const [summary, setSammary] = useState("");
+
+    const inputSentence = (event) => setSentence(event.target.value);
+    const onSummary = async (event) => {
+        event.preventDefault();
+        console.log(sentence);
+        let summary_sentence = await summary_using_chatgpt(sentence);
+        if (sentence === "") {
+            return;
+        }
+        setSammary(summary_sentence);
+        return;
+    };
+
+    // 챗봇 서비스
+    const [question, setQuestion] = useState([]);
+    const [answer, setAnswer] = useState([]);
+
+    const inputQuestion = (event) => setQuestion(event.target.value);
+    const onChat = async (event) => {
+        event.preventDefault();
+        console.log(question);
+        let chat_answer = await chat_using_chatgpt(question);
+        if (question === "") {
+            return;
+        }
+        setAnswer(chat_answer);
         return;
     };
 
@@ -85,7 +119,7 @@ export default function Home() {
             <div className="copywriter">
                 <h1>광고문구 작성 서비스</h1>
                 <br />
-                <form>
+                <form id="copywriter-form">
                     {/* 제품 이름: ${product}\n주요 내용: ${detail}\n광고 문구의 스타일: ${mood} */}
                     <input
                         onChange={inputProduct}
@@ -108,6 +142,32 @@ export default function Home() {
                 </form>
                 <button onClick={onGenerateCopy}>광고문구 생성하기</button>
                 <h3>{copy}</h3>
+            </div>
+            <div className="summary">
+                <h1>요약 서비스</h1>
+                <br />
+                <form className="summary-form">
+                    <input
+                        onChange={inputSentence}
+                        value={sentence}
+                        type="text"
+                        placeholder="요약 할 내용을 입력하세요."
+                    ></input>
+                    <button onClick={onSummary}>요약하기</button>
+                    <h3>{summary}</h3>
+                </form>
+            </div>
+            <div className="chat">
+                <h1>챗봇 서비스</h1>
+                <br />
+                <h3>{question}</h3>
+                <h3>{answer}</h3>
+                <input
+                    value={question}
+                    onChange={inputQuestion}
+                    placeholder="메세지를 입력하세요"
+                ></input>
+                <button onClick={onChat}>보내기</button>
             </div>
         </>
     );

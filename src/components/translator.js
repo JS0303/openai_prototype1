@@ -34,9 +34,10 @@ export default async function translate_text_using_chatgpt(
     fewshot_messages.push({ role: "user", content: { src_examples } });
     fewshot_messages.push({ role: "assistant", content: { trg_examples } });
 
-    const system_instruction = `assistant는 번역앱으로서 동작한다. ${src_lang}를 ${trg_lang}로 적절하게 번역하고 번역된 텍스트만 출력한다.
-                                번역된 텍스트의 예시를 제공한다. 참고하길 바란다.
-                                번역 예시 : ${fewshot_messages}`;
+    const system_instruction = `assistant는 번역 예시를 참고하여 ${src_lang}를 ${trg_lang}로 적절하게 번역하여 결과를 출력한다. 
+                                번역 예시 : ${fewshot_messages}
+                                번역 외에 다른 설명이나 응답은 하지 않는다.
+                                `;
 
     let messages = [
         { role: "system", content: system_instruction },
