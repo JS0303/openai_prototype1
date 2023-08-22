@@ -1,4 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
+import React, { Component } from "react";
 
 const configuration = new Configuration({
     organization: "org-UaLK1XJ9fsXDUO8SYXy9INaf",
@@ -19,11 +20,7 @@ const parallel_example = {
     ],
 };
 
-export default async function translate_text_using_chatgpt(
-    text,
-    src_lang,
-    trg_lang
-) {
+async function translate_text_using_chatgpt(text, src_lang, trg_lang) {
     console.log("번역을 위해 입력된 text : ", text);
     console.log("원본 언어 : ", src_lang, "번역될 언어 : ", trg_lang);
     const src_examples = parallel_example[src_lang];
@@ -56,4 +53,80 @@ export default async function translate_text_using_chatgpt(
     console.log("translated_text", translated_text);
 
     return translated_text;
+}
+
+export default class Translator extends Component {
+    state = {
+        text: "",
+        result: "",
+        srcLang: "한국어",
+        trgLang: "한국어",
+    };
+    translate = async () => {
+        const { text, srcLang, trgLang } = this.state;
+
+        // translate_text_using_chatgpt 함수 호출 및 결과 처리
+        let translated = await translate_text_using_chatgpt(
+            text,
+            srcLang,
+            trgLang
+        );
+        if (text === "") {
+            return;
+        }
+        this.setState({ result: translated });
+    };
+    inputText = (event) => this.setState({ text: event.target.value });
+    selectSrc = (event) => this.setState({ srcLang: event.target.value });
+    selectTrg = (event) => this.setState({ trgLang: event.target.value });
+    onTranslate = async (event) => {
+        event.preventDefault();
+        await this.translate();
+    };
+    render() {
+        const { result } = this.state;
+        return (
+            <>
+                <title>번역서비스</title>
+                <br />
+                <div className="input-box">
+                    <form id="translate-form">
+                        <label>
+                            원본 언어&nbsp;&nbsp;&nbsp;
+                            <select id="src_lang" onChange={this.selectSrc}>
+                                <option value="한국어">한국어</option>
+                                <option value="영어">영어</option>
+                                <option value="일본어">일본어</option>
+                            </select>
+                        </label>
+                        <label>
+                            목표 언어&nbsp;&nbsp;&nbsp;
+                            <select id="trg_lang" onChange={this.selectTrg}>
+                                <option value="한국어">한국어</option>
+                                <option value="영어">영어</option>
+                                <option value="일본어">일본어</option>
+                            </select>
+                        </label>
+                        <br />
+                        <div class="ui input">
+                            <input
+                                onChange={this.inputText}
+                                value={this.translate.text}
+                                type="text"
+                                placeholder="번역할 텍스트를 입력하세요"
+                            ></input>
+                        </div>
+                    </form>
+                    <button
+                        className="ui secondary button"
+                        variant="contained"
+                        onClick={this.onTranslate}
+                    >
+                        번역
+                    </button>
+                    <h3 className="result">{result}</h3>
+                </div>
+            </>
+        );
+    }
 }
