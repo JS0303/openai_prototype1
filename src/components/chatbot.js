@@ -18,7 +18,7 @@ export default async function chat_using_chatgpt(chatMessages) {
 
     const chat_answer = response.data.choices[0].message.content;
 
-    console.log("chat_answer", chat_answer);
+    // console.log("chat_answer", chat_answer);
 
     return chat_answer;
 }

@@ -66,19 +66,34 @@ export default function Home() {
     };
 
     // 챗봇 서비스
-    const [question, setQuestion] = useState([]);
     const [answer, setAnswer] = useState([]);
+    const [question, setQuestion] = useState([]);
+
+    const addAnswer = (text, isUser = false) => {
+        setAnswer((prevMessages) => [...prevMessages, { text, isUser }]);
+    };
 
     const inputQuestion = (event) => setQuestion(event.target.value);
     const onChat = async (event) => {
         event.preventDefault();
-        console.log(question);
         let chat_answer = await chat_using_chatgpt(question);
         if (question === "") {
             return;
         }
-        setAnswer(chat_answer);
+        addAnswer(question, true);
+        if (question.trim() === "") return;
+        addAnswer(chat_answer);
+        setQuestion("");
+        scrollToBottom();
         return;
+    };
+
+    // 스크롤을 아래로 이동하는 함수
+    const scrollToBottom = () => {
+        const chatContainer = document.getElementById("chat-container");
+        if (chatContainer) {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
     };
 
     return (
@@ -113,9 +128,12 @@ export default function Home() {
                         </select>
                     </label>
                 </form>
-                <button onClick={onTranslate}>번역</button>
+                <button variant="contained" onClick={onTranslate}>
+                    번역
+                </button>
                 <h3>{result}</h3>
             </div>
+
             <div className="copywriter">
                 <h1>광고문구 작성 서비스</h1>
                 <br />
@@ -140,9 +158,12 @@ export default function Home() {
                         placeholder="광고 문구의 스타일을 입력하세요"
                     ></input>
                 </form>
-                <button onClick={onGenerateCopy}>광고문구 생성하기</button>
+                <button variant="contained" onClick={onGenerateCopy}>
+                    광고문구 생성하기
+                </button>
                 <h3>{copy}</h3>
             </div>
+
             <div className="summary">
                 <h1>요약 서비스</h1>
                 <br />
@@ -153,20 +174,42 @@ export default function Home() {
                         type="text"
                         placeholder="요약 할 내용을 입력하세요."
                     ></input>
-                    <button onClick={onSummary}>요약하기</button>
+                    <button variant="contained" onClick={onSummary}>
+                        요약하기
+                    </button>
                     <h3>{summary}</h3>
                 </form>
             </div>
+
             <div className="chat">
                 <h1>챗봇 서비스</h1>
                 <br />
-                <h3>{question}</h3>
+                {/* <h3>{question}</h3>
                 <h3>{answer}</h3>
                 <input
                     value={question}
                     onChange={inputQuestion}
                     placeholder="메세지를 입력하세요"
                 ></input>
+                <button variant="contained" onClick={onChat}>
+                    보내기
+                </button> */}
+                {answer.map((message, index) => (
+                    <div
+                        key={index}
+                        className={`message ${message.isUser ? "user" : "bot"}`}
+                    >
+                        {message.text}
+                    </div>
+                ))}
+            </div>
+            <div className="input-box">
+                <input
+                    type="text"
+                    placeholder="메시지를 입력하세요..."
+                    value={question}
+                    onChange={inputQuestion}
+                />
                 <button onClick={onChat}>보내기</button>
             </div>
         </>
