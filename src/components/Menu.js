@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Menu } from "semantic-ui-react";
 import Translator from "./Translator";
 import Copywriter from "./Copywriter";
+import Summary from "./Summary";
+import Chatbot from "./Chatbot";
 
 export default class MenuSecondaryPointing extends Component {
     state = { activeItem: "번역" };
@@ -16,10 +18,10 @@ export default class MenuSecondaryPointing extends Component {
                 return <Translator />; // 번역 컴포넌트 렌더링
             case "광고문구 작성":
                 return <Copywriter />; // 광고문구 작성 컴포넌트 렌더링
-            // case "요약":
-            //     return <SummaryComponent />; // 요약 컴포넌트 렌더링
-            // case "챗봇":
-            //     return <ChatbotComponent />; // 챗봇 컴포넌트 렌더링
+            case "요약":
+                return <Summary />; // 요약 컴포넌트 렌더링
+            case "챗봇":
+                return <Chatbot />; // 챗봇 컴포넌트 렌더링
             default:
                 return null;
         }
