@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu, Icon } from "semantic-ui-react";
 import Translator from "./Translator";
 import Copywriter from "./Copywriter";
 import Summary from "./Summary";
 import Chatbot from "./Chatbot";
 
-export default class MenuSecondaryPointing extends Component {
+export default class TabMenu extends Component {
     state = { activeItem: "번역" };
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
@@ -32,34 +32,47 @@ export default class MenuSecondaryPointing extends Component {
 
         return (
             <div>
-                <Menu pointing secondary>
+                <Menu compact icon="labeled">
                     <Menu.Item
                         name="번역"
                         active={activeItem === "번역"}
                         onClick={this.handleItemClick}
-                    />
+                    >
+                        <Icon name="book" />
+                        번역
+                    </Menu.Item>
                     <Menu.Item
                         name="광고문구 작성"
                         active={activeItem === "광고문구 작성"}
                         onClick={this.handleItemClick}
-                    />
+                    >
+                        <Icon name="pencil" />
+                        광고문구 작성
+                    </Menu.Item>
                     <Menu.Item
                         name="요약"
                         active={activeItem === "요약"}
                         onClick={this.handleItemClick}
-                    />
+                    >
+                        <Icon name="unordered list" />
+                        요약
+                    </Menu.Item>
                     <Menu.Item
                         name="챗봇"
                         active={activeItem === "챗봇"}
                         onClick={this.handleItemClick}
-                    />
-                    <Menu.Menu position="right">
-                        <Menu.Item
-                            name="logout"
-                            active={activeItem === "logout"}
-                            onClick={this.handleItemClick}
-                        />
-                    </Menu.Menu>
+                    >
+                        <Icon name="paper plane" />
+                        챗봇
+                    </Menu.Item>
+                    <Menu.Item
+                        name="불편신고"
+                        active={activeItem === "불편신고"}
+                        onClick={this.handleItemClick}
+                    >
+                        <Icon name="commenting" />
+                        개선점 제안
+                    </Menu.Item>
                 </Menu>
                 <div>
                     {this.renderContent()}{" "}

@@ -86,7 +86,7 @@ export default class Copywriter extends Component {
                         ></input>
                     </form>
                     <button
-                        className="ui secondary button"
+                        className="ui secondary basic button"
                         variant="contained"
                         onClick={this.onGenerateCopy}
                     >

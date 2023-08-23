@@ -62,7 +62,7 @@ export default class Summary extends Component {
                             placeholder="요약 할 내용을 입력하세요."
                         ></input>
                         <button
-                            className="ui secondary button"
+                            className="ui secondary basic button"
                             variant="contained"
                             onClick={this.onSummary}
                         >

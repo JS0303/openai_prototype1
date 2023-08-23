@@ -1,5 +1,6 @@
 import { Configuration, OpenAIApi } from "openai";
 import React, { Component } from "react";
+import { Icon, Message } from "semantic-ui-react";
 
 const configuration = new Configuration({
     organization: "org-UaLK1XJ9fsXDUO8SYXy9INaf",
@@ -53,15 +54,21 @@ export default class Chatbot extends Component {
     inputQuestion = (event) => this.setState({ question: event.target.value });
 
     onChat = async (event) => {
-        event.preventDefault();
         await this.chat();
     };
 
     // 스크롤을 아래로 이동하는 함수
     scrollToBottom = () => {
-        const chatContainer = document.getElementById("chat-container");
+        const chatContainer = document.getElementById("message container");
         if (chatContainer) {
             chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    };
+
+    // 엔터 키 처리 함수
+    handleKeyPress = (event) => {
+        if (event.key === "Enter") {
+            this.onChat();
         }
     };
     render() {
@@ -69,29 +76,39 @@ export default class Chatbot extends Component {
         return (
             <>
                 <div className="chat-container">
-                    {chat_messages.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`message ${
-                                message.isUser ? "user" : "bot"
-                            }`}
-                        >
-                            {message.text}
+                    <div className="message-container">
+                        {chat_messages.map((message, index) => (
+                            <Message
+                                key={index}
+                                className={`message ${
+                                    message.isUser
+                                        ? "user ui violet message"
+                                        : "bot ui teal message"
+                                }`}
+                            >
+                                {message.isUser
+                                    ? `사용자 : ${message.text}`
+                                    : `봇 : ${message.text}`}
+                            </Message>
+                        ))}
+                        <div className="input-box">
+                            <div className="ui action input">
+                                <input
+                                    type="text"
+                                    placeholder="메시지를 입력하세요..."
+                                    value={question}
+                                    onChange={this.inputQuestion}
+                                    onKeyPress={this.handleKeyPress} // 엔터 키 처리
+                                />
+
+                                <button
+                                    className="ui secondary basic button"
+                                    onClick={this.onChat}
+                                >
+                                    <Icon name="paper plane" />
+                                </button>
+                            </div>
                         </div>
-                    ))}
-                    <div className="input-box">
-                        <input
-                            type="text"
-                            placeholder="메시지를 입력하세요..."
-                            value={question}
-                            onChange={this.inputQuestion}
-                        />
-                        <button
-                            className="ui secondary button"
-                            onClick={this.onChat}
-                        >
-                            보내기
-                        </button>
                     </div>
                 </div>
             </>
