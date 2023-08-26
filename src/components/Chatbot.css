@@ -1,5 +1,5 @@
 .ui.message {
-    max-width: 400px;
+    max-width: 300px;
 }
 
 .ui.violet.message {
@@ -20,17 +20,11 @@
     background-color: #e0e0e0; /* 봇 메시지 배경색 */
 }
 
-.input-box > .ui.fluid.action.input {
-    flex: 1;
-    margin: 0;
-}
-
 .ui.fluid.action.input > input {
-    flex: 1;
     border-radius: 10px;
     border: 1px solid #ccc;
     padding: 10px;
-    box-sizing: border-box;
+    width: 100%;
 }
 
 .message-container {
@@ -44,11 +38,12 @@
     display: flex;
     flex-direction: column;
     height: 85vh;
-    width: 80%;
-    margin: 20px auto 5px auto;
+    width: 100%;
+    margin: 1rem auto 5px auto;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;
+    position: relative;
 }
 
 .message.user {
@@ -65,15 +60,13 @@
 
 .input-box.chatbot {
     padding: 10px;
-    margin: 0px 10px 30px 10px;
+    margin: 0px 11px 1rem 10px;
     background-color: #f0f0f0;
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    width: 76%;
-    display: flex;
     border-radius: 10px;
-    align-items: center;
-    justify-content: space-between;
+    display: flex;
+    width: 93%;
 }
 
 .ui.button:not(.icon) > .icon:not(.button):not(.dropdown) {
@@ -83,4 +76,8 @@
 .ui.button > .icon:not(.button) {
     height: 1em;
     opacity: 1;
+}
+
+.ui.fluid.input {
+    width: 100%;
 }
