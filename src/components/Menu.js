@@ -4,6 +4,7 @@ import Translator from "./Translator";
 import Copywriter from "./Copywriter";
 import Summary from "./Summary";
 import Chatbot from "./Chatbot";
+import "./Menu.css";
 
 export default class TabMenu extends Component {
     state = { activeItem: "번역" };

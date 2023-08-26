@@ -100,8 +100,8 @@ export default class Chatbot extends Component {
                                 key={index}
                                 className={`message ${
                                     message.isUser
-                                        ? "user ui violet message"
-                                        : "bot ui teal message"
+                                        ? "user ui violet chatbot message"
+                                        : "bot ui teal chatbot message"
                                 }`}
                             >
                                 {message.isUser
@@ -122,7 +122,7 @@ export default class Chatbot extends Component {
                             />
 
                             <button
-                                className="ui violet button"
+                                className="ui grey button"
                                 onClick={this.onChat}
                             >
                                 <Icon name="paper plane" />

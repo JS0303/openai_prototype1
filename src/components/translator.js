@@ -1,5 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
 import React, { Component } from "react";
+import "./Translator.css";
+import { Message, Icon } from "semantic-ui-react";
 
 const configuration = new Configuration({
     organization: "org-UaLK1XJ9fsXDUO8SYXy9INaf",
@@ -87,44 +89,63 @@ export default class Translator extends Component {
         const { result } = this.state;
         return (
             <>
-                <title>번역서비스</title>
-                <br />
-                <div className="input-box">
-                    <form id="translate-form">
-                        <label>
-                            원본 언어&nbsp;&nbsp;&nbsp;
-                            <select id="src_lang" onChange={this.selectSrc}>
-                                <option value="한국어">한국어</option>
-                                <option value="영어">영어</option>
-                                <option value="일본어">일본어</option>
-                            </select>
-                        </label>
-                        <label>
-                            목표 언어&nbsp;&nbsp;&nbsp;
-                            <select id="trg_lang" onChange={this.selectTrg}>
-                                <option value="한국어">한국어</option>
-                                <option value="영어">영어</option>
-                                <option value="일본어">일본어</option>
-                            </select>
-                        </label>
-                        <br />
-                        <div class="ui input">
-                            <input
-                                onChange={this.inputText}
-                                value={this.translate.text}
-                                type="text"
-                                placeholder="번역할 텍스트를 입력하세요"
-                            ></input>
+                <div className="supream">
+                    <div className="translation-container">
+                        <form id="translate-form">
+                            <div className="input-label">
+                                <label htmlFor="src_lang">
+                                    원본 언어 &nbsp;&nbsp;
+                                </label>
+                                <select
+                                    class="ui search selection dropdown"
+                                    id="src_lang"
+                                    onChange={this.selectSrc}
+                                >
+                                    <option value="한국어">한국어</option>
+                                    <option value="영어">영어</option>
+                                    <option value="일본어">일본어</option>
+                                </select>
+                            </div>
+                            <div className="input-label">
+                                <label htmlFor="trg_lang">
+                                    목표 언어 &nbsp;&nbsp;
+                                </label>
+                                <select
+                                    class="ui search selection dropdown"
+                                    id="trg_lang"
+                                    onChange={this.selectTrg}
+                                >
+                                    <option value="한국어">한국어</option>
+                                    <option value="영어">영어</option>
+                                    <option value="일본어">일본어</option>
+                                </select>
+                            </div>
+                            <div className="input-field">
+                                <form class="ui form before">
+                                    <textarea
+                                        onChange={this.inputText}
+                                        value={this.translate.text}
+                                        type="text"
+                                        placeholder="번역할 텍스트를 입력하세요"
+                                        rows="3"
+                                    ></textarea>
+                                </form>
+                            </div>
+                            <div className="translate-button-container">
+                                <button
+                                    className="ui grey translate button"
+                                    variant="contained"
+                                    onClick={this.onTranslate}
+                                >
+                                    번역&nbsp;&nbsp;&nbsp;
+                                    <Icon name="translate" />
+                                </button>
+                            </div>
+                        </form>
+                        <div className="translation-result">
+                            <Message className="result">{result}</Message>
                         </div>
-                    </form>
-                    <button
-                        className="ui secondary button"
-                        variant="contained"
-                        onClick={this.onTranslate}
-                    >
-                        번역
-                    </button>
-                    <h3 className="result">{result}</h3>
+                    </div>
                 </div>
             </>
         );

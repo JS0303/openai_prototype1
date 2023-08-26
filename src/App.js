@@ -6,7 +6,7 @@ export default function App() {
     return (
         <>
             <div className="app-container">
-                <TabMenu className="menu" />
+                <TabMenu class="menu" />
             </div>
         </>
     );
