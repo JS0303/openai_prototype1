@@ -126,7 +126,7 @@ export default class Translator extends Component {
                                         onChange={this.inputText}
                                         value={this.translate.text}
                                         type="text"
-                                        placeholder="번역할 텍스트를 입력하세요"
+                                        placeholder="번역할 텍스트를 입력하세요."
                                         rows="3"
                                     ></textarea>
                                 </form>
@@ -143,6 +143,7 @@ export default class Translator extends Component {
                             </div>
                         </form>
                         <div className="translation-result">
+                            <h5>번역 결과가 여기에 표시됩니다.</h5>
                             <Message className="result">{result}</Message>
                         </div>
                     </div>
