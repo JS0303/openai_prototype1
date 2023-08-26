@@ -17,7 +17,7 @@ export default class TabMenu extends Component {
         switch (activeItem) {
             case "번역":
                 return <Translator />; // 번역 컴포넌트 렌더링
-            case "광고문구 작성":
+            case "광고작성":
                 return <Copywriter />; // 광고문구 작성 컴포넌트 렌더링
             case "요약":
                 return <Summary />; // 요약 컴포넌트 렌더링
@@ -43,12 +43,12 @@ export default class TabMenu extends Component {
                         번역
                     </Menu.Item>
                     <Menu.Item
-                        name="광고문구 작성"
-                        active={activeItem === "광고문구 작성"}
+                        name="광고작성"
+                        active={activeItem === "광고작성"}
                         onClick={this.handleItemClick}
                     >
                         <Icon name="pencil" />
-                        광고문구 작성
+                        광고작성
                     </Menu.Item>
                     <Menu.Item
                         name="요약"
