@@ -66,14 +66,6 @@ export default class TabMenu extends Component {
                         <Icon name="paper plane" />
                         챗봇
                     </Menu.Item>
-                    <Menu.Item
-                        name="불편신고"
-                        active={activeItem === "불편신고"}
-                        onClick={this.handleItemClick}
-                    >
-                        <Icon name="commenting" />
-                        개선점 제안
-                    </Menu.Item>
                 </Menu>
                 <div>
                     {this.renderContent()}{" "}
