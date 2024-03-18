@@ -25,9 +25,10 @@ input {
 }
 
 select {
-    padding: 5px;
+    padding: -98.21428571em 2.1em .78571429em 1em;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size : 5px;
 }
 
 .translate-button-container {

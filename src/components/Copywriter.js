@@ -1,14 +1,11 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAIApi from "openai";
 import React, { Component } from "react";
 import "./Copywriter.css";
 import { Message, Icon } from "semantic-ui-react";
+import config from "./apikey.js";
 
-const configuration = new Configuration({
-    organization: "org-UaLK1XJ9fsXDUO8SYXy9INaf",
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
+const apiKey = config.apiKey;
+const openai = new OpenAIApi({apiKey:apiKey, dangerouslyAllowBrowser: true});
 
 async function slogan_generator_using_chapgpt(prompt) {
     const system_instruction =
@@ -19,13 +16,13 @@ async function slogan_generator_using_chapgpt(prompt) {
     ];
     let model = "gpt-3.5-turbo";
 
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
         model: model,
         messages: messages,
     });
 
-    const ad_slogan = response.data.choices[0].message.content;
-    console.log("ad_slogan : ", ad_slogan);
+    const ad_slogan = response.choices[0].message.content;
+
     return ad_slogan;
 }
 

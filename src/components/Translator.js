@@ -1,14 +1,11 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAIApi from "openai";
 import React, { Component } from "react";
 import "./Translator.css";
 import { Message, Icon } from "semantic-ui-react";
+import config from "./apikey.js";
 
-const configuration = new Configuration({
-    organization: "org-UaLK1XJ9fsXDUO8SYXy9INaf",
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
+const apiKey = config.apiKey;
+const openai = new OpenAIApi({apiKey:apiKey, dangerouslyAllowBrowser: true});
 
 const parallel_example = {
     한국어: ["오늘 날씨 어때", "딥러닝 기반의 AI 기술이 인기를 끌고 있다"],
@@ -45,12 +42,12 @@ async function translate_text_using_chatgpt(text, src_lang, trg_lang) {
 
     let model = "gpt-3.5-turbo";
 
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
         model: model,
         messages: messages,
     });
 
-    const translated_text = response.data.choices[0].message.content;
+    const translated_text = response.choices[0].message.content;
 
     console.log("translated_text", translated_text);
 
