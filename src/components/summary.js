@@ -1,14 +1,11 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAIApi from "openai";
 import { Component } from "react";
 import { Message, Icon } from "semantic-ui-react";
 import "./Summary.css";
+import config from "./apikey.js";
 
-const configuration = new Configuration({
-    organization: "org-UaLK1XJ9fsXDUO8SYXy9INaf",
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
+const apiKey = config.apiKey;
+const openai = new OpenAIApi({apiKey:apiKey, dangerouslyAllowBrowser: true});
 
 async function summary_using_chatgpt(full_text) {
     const system_instruction =
@@ -19,12 +16,12 @@ async function summary_using_chatgpt(full_text) {
     ];
     let model = "gpt-3.5-turbo";
 
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
         model: model,
         messages: messages,
     });
 
-    const summary_result = response.data.choices[0].message.content;
+    const summary_result = response.choices[0].message.content;
 
     console.log("summary_result", summary_result);
 

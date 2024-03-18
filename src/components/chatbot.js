@@ -1,38 +1,38 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAIApi from "openai";
 import React, { Component } from "react";
 import { Icon, Message } from "semantic-ui-react";
 import "./Chatbot.css";
+import config from "./apikey.js";
 
-const configuration = new Configuration({
-    organization: "org-UaLK1XJ9fsXDUO8SYXy9INaf",
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
+const apiKey = config.apiKey;
+const openai = new OpenAIApi({apiKey:apiKey, dangerouslyAllowBrowser: true});
 
 async function chat_using_chatgpt(chatMessages) {
-    let model = "gpt-3.5-turbo";
-    let messages = [{ role: "user", content: chatMessages }];
-
-    const response = await openai.createChatCompletion({
-        model: model,
+    const messages = [
+        {
+            role: "user",
+            content: chatMessages,
+        },
+    ];
+    const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
         messages: messages,
     });
 
-    const chat_answer = response.data.choices[0].message.content;
+    const chat_answer = response.choices[0].message.content;
 
     return chat_answer;
 }
 
 export default class Chatbot extends Component {
     state = {
+        role: "user",
         chat_messages: [],
         question: "",
     };
     // 챗봇 서비스
     chat = async () => {
         const { chat_messages, question } = this.state;
-
         if (question.trim() === "") {
             return;
         }
